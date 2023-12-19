@@ -87,8 +87,8 @@ function App() {
   return (
     <>
 
+      {ready && <Editor abc={output} setAbc={setOutput} />}
       <div>
-        <Editor value={output} />
         <div>
           <textarea value={input} rows={3} onChange={e => setInput(e.target.value)}></textarea>
           <div>{output}</div>

@@ -41,7 +41,6 @@ self.addEventListener('message', async (event) => {
         max_length: 100,
         callback_function: x => {
             let output = lm.tokenizer.decode(x[0].output_token_ids, { skip_special_tokens: true });
-            console.log(output);
             self.postMessage({
                 status: 'update',
                 output: output,

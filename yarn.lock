@@ -642,11 +642,6 @@
   optionalDependencies:
     onnxruntime-node "1.14.0"
 
-abcjs@^6.2.3:
-  version "6.2.3"
-  resolved "https://registry.yarnpkg.com/abcjs/-/abcjs-6.2.3.tgz#37c18f03b9c00ecfb87a246ed07a238247b53892"
-  integrity sha512-epu8C1yRkxV7Ss9hS0Bu72rairl1p2sR3hviVowjtdDJvb5GRE0SrB4TtN4HBbaoYhvxGnSZQxGULfQlW3o3RQ==
-
 acorn-jsx@^5.3.2:
   version "5.3.2"
   resolved "https://registry.yarnpkg.com/acorn-jsx/-/acorn-jsx-5.3.2.tgz#7ed5bb55908b3b2f1bc55c6af1653bada7f07937"
