@@ -9,8 +9,8 @@ function App() {
   const [progressItems, setProgressItems] = useState([]);
 
   // Inputs and outputs
-  const [input, setInput] = useState('A fast and');
-  const [output, setOutput] = useState('');
+  const [input, setInput] = useState('');
+  const [abc, setAbc] = useState('');
   const [disabled, setDisabled] = useState(false);
 
 
@@ -60,8 +60,10 @@ function App() {
           break;
 
         case 'update':
+          console.log(e)
           // Generation update: update the output text.
-          setOutput(e.data.output);
+          const abcSplit  = e.data.output.split("@")[1];
+          setAbc(abcSplit);
           break;
 
         case 'complete':
@@ -79,21 +81,22 @@ function App() {
   const generate= () => {
     setDisabled(true);
     worker.current.postMessage({
-      text: input,
+      text: input+"@",
     });
   }
 
+  console.log(abc);
+
+  // everything after @ is abc
+  // everything before @ is text
   
   return (
-    <>
-
-      {ready && <Editor abc={output} setAbc={setOutput} />}
+    <div style={{ width: '50%', height: '100%', margin:"auto" }}>
       <div>
         <div>
           <textarea value={input} rows={3} onChange={e => setInput(e.target.value)}></textarea>
-          <div>{output}</div>
         </div>
-        
+        {ready && <Editor abc={abc} setAbc={setAbc} />}
       </div>
 
       <button disabled={disabled} onClick={generate}>Generate</button>
@@ -108,7 +111,7 @@ function App() {
           </div>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 

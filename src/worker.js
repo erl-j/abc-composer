@@ -1,7 +1,7 @@
 
 import { pipeline,env} from '@xenova/transformers';
 
-env.localModelPath = '/models/session_gt2d/spaced';
+env.localModelPath = '/models/session_gt2d/nospace';
 env.allowRemoteModels = false;
 env.allowLocalModels = true;
 env.useBrowserCache = false;
@@ -13,7 +13,7 @@ env.useBrowserCache = false;
  */
 class MyLMPipeline {
     static task = 'text-generation';
-    static model = 'checkpoint-13000';
+    static model = 'checkpoint-8000';
     static instance = null;
 
     static async getInstance(progress_callback = null) {
