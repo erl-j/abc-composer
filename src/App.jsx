@@ -62,7 +62,7 @@ function App() {
         case 'update':
           console.log(e)
           // Generation update: update the output text.
-          const abcSplit  = e.data.output.split("@")[1];
+          const abcSplit = e.data.output.split("@")[1];
           setAbc(abcSplit);
           break;
 
@@ -78,10 +78,10 @@ function App() {
     return () => worker.current.removeEventListener('message', onMessageReceived);
   });
 
-  const generate= () => {
+  const generate = () => {
     setDisabled(true);
     worker.current.postMessage({
-      text: input+"@",
+      text: input + "@",
     });
   }
 
@@ -89,19 +89,13 @@ function App() {
 
   // everything after @ is abc
   // everything before @ is text
-  
+
   return (
-    <div style={{ width: '50%', height: '100%', margin:"auto" }}>
-      <div>
-        <div>
-          <textarea value={input} rows={3} onChange={e => setInput(e.target.value)}></textarea>
-        </div>
+    <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%" }}/>
         {ready && <Editor abc={abc} setAbc={setAbc} />}
-      </div>
-
-      <button disabled={disabled} onClick={generate}>Generate</button>
-
-      <div>
+        <button disabled={disabled} onClick={generate}>Generate</button>
         {ready === false && (
           <label>Loading models... (only run once)</label>
         )}
