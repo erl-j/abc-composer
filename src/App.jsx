@@ -92,7 +92,9 @@ function App() {
 
   return (
     <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <h1>abc composer</h1>
         <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%" }}/>
         {ready && <Editor abc={abc} setAbc={setAbc} />}
         <button disabled={disabled} onClick={generate}>Generate</button>

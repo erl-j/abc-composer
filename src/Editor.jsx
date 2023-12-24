@@ -1,5 +1,9 @@
 import React from "react";
 import ABCJS from "abcjs";
+// import css abcjs-audio.css
+
+import "./abc-audio.css";
+
 
 const Editor = ({abc,setAbc}) => {
 
