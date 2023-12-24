@@ -104,6 +104,7 @@ function App() {
             <Progress text={data.file} percentage={data.progress} />
           </div>
         ))}
+        <img src="logo.png" alt="logo" style={{ width: "200px", height: "200px" }} />
       </div>
     </div>
   )
