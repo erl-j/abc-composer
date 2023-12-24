@@ -1,10 +1,13 @@
 
 import { pipeline,env} from '@xenova/transformers';
 
-env.localModelPath = '/models/session_gt2d/nospace';
-env.allowRemoteModels = false;
-env.allowLocalModels = true;
-env.useBrowserCache = false;
+// env.localModelPath = '/models/session_gt2d/nospace';
+env.remotePathTemplate = '{model}/'
+env.allowRemoteModels = true;
+env.remoteHost = "https://erl-j.github.io/abc-composer/models/session_gt2d/nospace/"
+
+// env.allowLocalModels = true;
+env.useBrowserCache = true;
 
 /**
  * This class uses the Singleton pattern to ensure that only one instance of the
