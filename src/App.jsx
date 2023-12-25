@@ -93,33 +93,33 @@ function App() {
   // everything before @ is text
 
   return (
-    <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection:"column" }}>
-      {/* <h1>abc composer</h1> */}
-      <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-evenly" }}>
-        <div>
-        <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%", height:"100%" }} />
-        <button disabled={disabled} onClick={generate}>Generate</button>
-        </div>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px" }}>
-          <Range min={0} max={2} step={0.01} defaultValue={1} label="Temperature" description="" value={generationParams.temperature} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, temperature: value }))} />
-          <Range min={0} max={1} step={0.01} defaultValue={1} label="Top P" description="" value={generationParams.top_p} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_p: value }))} />
-          <Range min={1} max={100} step={1} defaultValue={50} label="Top K" description="" value={generationParams.top_k} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_k: value }))} />
-        </div>
-
-      </div>
-
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-
-        {ready && <Editor abc={abc} setAbc={setAbc} />}
-        {ready === false && (
-          <label>Loading models... (only run once)</label>
-        )}
-        {progressItems.map(data => (
-          <div key={data.file}>
-            <Progress text={data.file} percentage={data.progress} />
+    <div style={{ width: "100vw", height: "100vh" }}>
+      <div style={{ display: "flex", flexDirection: "column", justifyContent: "left", height:"100%", margin:64}}>
+        {/* generation settings */}
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
+          <textarea style={{ flexGrow: 4 }} value={input} onChange={e => setInput(e.target.value)} />
+          <div style={{ flexGrow: 1, display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", }}>
+            <Range min={0} max={2} step={0.01} defaultValue={1} label="Temperature" description="" value={generationParams.temperature} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, temperature: value }))} />
+            <Range min={0} max={1} step={0.01} defaultValue={1} label="Top P" description="" value={generationParams.top_p} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_p: value }))} />
+            <Range min={1} max={100} step={1} defaultValue={50} label="Top K" description="" value={generationParams.top_k} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_k: value }))} />
           </div>
-        ))}
-        {/* <img src="logo.png" alt="logo" style={{ width: "200px", height: "200px" }} /> */}
+        </div>
+        <button style={{height:64}} disabled={disabled} onClick={generate}>Generate</button>
+
+        {/* output */}
+        <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+          {progressItems.length > 0 &&
+            (<div>
+              <label>Loading models... (only run once)</label>
+              {progressItems.map(data => (
+                <div key={data.file}>
+                  <Progress text={data.file} percentage={data.progress} />
+                </div>
+              ))}
+            </div>
+            )}
+          {ready && <Editor abc={abc} setAbc={setAbc} />}
+        </div>
       </div>
     </div>
   )

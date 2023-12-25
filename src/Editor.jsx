@@ -5,18 +5,18 @@ import ABCJS from "abcjs";
 import "./abc-audio.css";
 
 
-const Editor = ({abc,setAbc}) => {
+const Editor = ({ abc, setAbc }) => {
 
     const abcEditor = React.useRef(null);
 
     React.useEffect(() => {
-        abcEditor.current= new ABCJS.Editor("abc", {
+        abcEditor.current = new ABCJS.Editor("abc", {
             canvas_id: "paper",
             warnings_id: "warnings",
             abcjsParams: {}
         });
     }
-    , []);
+        , []);
 
     React.useEffect(() => {
         if (ABCJS.synth.supportsAudio()) {
@@ -48,14 +48,29 @@ const Editor = ({abc,setAbc}) => {
     }
         , [abc]);
 
+    const downloadMidi = () => {
+        var abc = document.getElementById("abc").value;
+        var a = document.getElementById("midi-download");
+        var midi = ABCJS.synth.getMidiFile(abc, { midiOutputType: "encoded" })
+        a.setAttribute("href", midi)
+        a.click();
+    }
+
     return (
-        <div>
-            <div className="container">
-            <textarea id="abc" cols="80" rows="12" spellCheck="false" value={abc} onChange={(e) => setAbc(e.target.value)}>
-            </textarea>
-            <div id="paper"></div>
-            <div id="warnings"></div>
-            <div id="audio"></div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", width: "100%" }}>
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%" }} >
+            <div id="audio" className="abcjs-inline-audio" style={{ width: "20%" }}></div>
+            <button onClick={downloadMidi}>Download midi</button>
+            <a id="midi-download" download="example.mid"></a>
+            </div>
+
+            <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%" }} >
+                <textarea style={{ flexGrow: 3 }} id="abc" spellCheck="false" value={abc} onChange={(e) => setAbc(e.target.value)} />
+                <div style={{ flexGrow: 3, display: "flex", flexDirection: "column", alignItems: "center", }}>
+                    <div id="paper"></div>
+                    <div id="warnings"></div>
+                </div>
+
             </div>
         </div>
     );
