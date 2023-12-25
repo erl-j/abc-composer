@@ -13,6 +13,8 @@ function App() {
   const [abc, setAbc] = useState('');
   const [disabled, setDisabled] = useState(false);
 
+  const [generationParams, setGenerationParams] = useState({ temperature: 1.0 })
+
 
 
   const worker = useRef(null);
@@ -60,7 +62,6 @@ function App() {
           break;
 
         case 'update':
-          console.log(e)
           // Generation update: update the output text.
           const abcSplit = e.data.output.split("@")[1];
           setAbc(abcSplit);
@@ -82,10 +83,10 @@ function App() {
     setDisabled(true);
     worker.current.postMessage({
       text: input + "@",
+      generationParams
     });
   }
 
-  console.log(abc);
 
   // everything after @ is abc
   // everything before @ is text
@@ -94,8 +95,12 @@ function App() {
     <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <input type="range" min="0" max="2" step="0.1" 
+        value={generationParams.temperature} 
+        onChange={e => setGenerationParams(oldGenerationParams => ({...oldGenerationParams, temperature: Number(e.target.value)}))} />
+        <p>Temperature: {generationParams.temperature}</p>
         <h1>abc composer</h1>
-        <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%" }}/>
+        <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%" }} />
         {ready && <Editor abc={abc} setAbc={setAbc} />}
         <button disabled={disabled} onClick={generate}>Generate</button>
         {ready === false && (

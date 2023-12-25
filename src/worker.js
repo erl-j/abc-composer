@@ -38,10 +38,23 @@ self.addEventListener('message', async (event) => {
     );
 
     let text = event.data.text.trim();
+
+    // temperature: 2:
+    // max_new_tokens: 10:
+    // repetition_penalty: 1.5:
+    // // no_repeat_ngram_size: 2,
+    // // num_beams: 1,
+    // // num_return_sequences: 1,
+    // min_tokens:
+    // top_k:
+    console.log(event.data.generationParams)
+
     // Actually perform the translation
     let output = await lm(text, {
+        ...event.data.generationParams,
         // Allows for partial output
         max_length: 100,
+        do_sample: true,
         callback_function: x => {
             let output = lm.tokenizer.decode(x[0].output_token_ids, { skip_special_tokens: true });
             self.postMessage({
