@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Progress from './components/Progress';
 import Editor from './Editor';
+import Range from './Range';
 
 function App() {
 
@@ -13,7 +14,7 @@ function App() {
   const [abc, setAbc] = useState('');
   const [disabled, setDisabled] = useState(false);
 
-  const [generationParams, setGenerationParams] = useState({ temperature: 1.0 })
+  const [generationParams, setGenerationParams] = useState({ temperature: 1.0, top_k: 50, top_p: 1.0 })
 
 
 
@@ -92,17 +93,24 @@ function App() {
   // everything before @ is text
 
   return (
-    <div style={{ width: "100%", height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
+    <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection:"column" }}>
+      {/* <h1>abc composer</h1> */}
+      <div style={{ display: "flex", flexDirection: "row", justifyContent:"space-evenly" }}>
+        <div>
+        <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%", height:"100%" }} />
+        <button disabled={disabled} onClick={generate}>Generate</button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", padding: "10px" }}>
+          <Range min={0} max={2} step={0.01} defaultValue={1} label="Temperature" description="" value={generationParams.temperature} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, temperature: value }))} />
+          <Range min={0} max={1} step={0.01} defaultValue={1} label="Top P" description="" value={generationParams.top_p} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_p: value }))} />
+          <Range min={1} max={100} step={1} defaultValue={50} label="Top K" description="" value={generationParams.top_k} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_k: value }))} />
+        </div>
+
+      </div>
 
       <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <input type="range" min="0" max="2" step="0.1" 
-        value={generationParams.temperature} 
-        onChange={e => setGenerationParams(oldGenerationParams => ({...oldGenerationParams, temperature: Number(e.target.value)}))} />
-        <p>Temperature: {generationParams.temperature}</p>
-        <h1>abc composer</h1>
-        <textarea value={input} onChange={e => setInput(e.target.value)} style={{ width: "100%" }} />
+
         {ready && <Editor abc={abc} setAbc={setAbc} />}
-        <button disabled={disabled} onClick={generate}>Generate</button>
         {ready === false && (
           <label>Loading models... (only run once)</label>
         )}
@@ -111,7 +119,7 @@ function App() {
             <Progress text={data.file} percentage={data.progress} />
           </div>
         ))}
-        <img src="logo.png" alt="logo" style={{ width: "200px", height: "200px" }} />
+        {/* <img src="logo.png" alt="logo" style={{ width: "200px", height: "200px" }} /> */}
       </div>
     </div>
   )
