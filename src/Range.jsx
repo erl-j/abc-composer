@@ -17,9 +17,10 @@ const Range = ({ min, max, value, defaultValue, step, onChange, label, descripti
                     <div>{displayValue}</div>
                 </div>
                 <input className="slider" type="range" min={min} max={max} step={step} value={value} onChange={(e) => onChange(e.target.valueAsNumber)}
-                onDoubleClick={() => onChange(defaultValue)} ></input>
+                onDoubleClick={() => onChange(defaultValue)} 
+                ></input>
             </div>
-            <Tooltip place={"right"} anchorId={label} content={description} style={{ zIndex: 10 }} />
+            {label!="" && <Tooltip place={"right"} anchorId={label} content={description} style={{ zIndex: 10 }} />}
         </>
     )
 }

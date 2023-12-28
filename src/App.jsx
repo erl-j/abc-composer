@@ -10,11 +10,11 @@ function App() {
   const [progressItems, setProgressItems] = useState([]);
 
   // Inputs and outputs
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState('A fun jig in 6/8 and C mixolydian.');
   const [abc, setAbc] = useState('');
   const [disabled, setDisabled] = useState(false);
 
-  const [generationParams, setGenerationParams] = useState({ temperature: 1.0, top_k: 50, top_p: 1.0 })
+  const [generationParams, setGenerationParams] = useState({ temperature: 1.0, top_k: 50, top_p: 0.99, max_length: 100 })
 
 
 
@@ -99,6 +99,7 @@ function App() {
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-evenly" }}>
           <textarea style={{ flexGrow: 4 }} value={input} onChange={e => setInput(e.target.value)} />
           <div style={{ flexGrow: 1, display: "flex", flexDirection: "column", alignItems: "center", border: "1px solid black", }}>
+            <Range min={1} max={500} step={1} defaultValue={100} label="Max length" description="" value={generationParams.max_length} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, max_length: value }))} />
             <Range min={0} max={2} step={0.01} defaultValue={1} label="Temperature" description="" value={generationParams.temperature} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, temperature: value }))} />
             <Range min={0} max={1} step={0.01} defaultValue={1} label="Top P" description="" value={generationParams.top_p} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_p: value }))} />
             <Range min={1} max={100} step={1} defaultValue={50} label="Top K" description="" value={generationParams.top_k} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_k: value }))} />

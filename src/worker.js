@@ -39,6 +39,9 @@ self.addEventListener('message', async (event) => {
 
     let text = event.data.text.trim();
 
+    let stopToken = "€"
+    let stopTokenId = lm.tokenizer.encode(stopToken)[0];
+
     // temperature: 2:
     // max_new_tokens: 10:
     // repetition_penalty: 1.5:
@@ -53,10 +56,11 @@ self.addEventListener('message', async (event) => {
     let output = await lm(text, {
         ...event.data.generationParams,
         // Allows for partial output
-        max_length: 100,
         do_sample: true,
+        eos_token_id: stopTokenId,
         callback_function: x => {
             let output = lm.tokenizer.decode(x[0].output_token_ids, { skip_special_tokens: true });
+            output = output.replace(stopToken, "");
             self.postMessage({
                 status: 'update',
                 output: output,
@@ -64,6 +68,7 @@ self.addEventListener('message', async (event) => {
         }
     });
 
+    // remove stop token
     // Send the output back to the main thread
     self.postMessage({
         status: 'complete',

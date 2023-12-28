@@ -1,5 +1,5 @@
 import React from "react";
-import ABCJS from "abcjs";
+import ABCJS, { synth } from "abcjs";
 // import css abcjs-audio.css
 
 import "./abc-audio.css";
@@ -8,6 +8,8 @@ import "./abc-audio.css";
 const Editor = ({ abc, setAbc }) => {
 
     const abcEditor = React.useRef(null);
+    const synthControl = React.useRef(null);
+
 
     React.useEffect(() => {
         abcEditor.current = new ABCJS.Editor("abc", {
@@ -18,7 +20,15 @@ const Editor = ({ abc, setAbc }) => {
     }
         , []);
 
+    // pause audio when abc changes
+
+
     React.useEffect(() => {
+
+        // if synth control exists, pause it
+        if (synthControl.current) {
+            synthControl.current.pause() 
+        }
         if (ABCJS.synth.supportsAudio()) {
             var controlOptions = {
                 displayRestart: true,
@@ -26,9 +36,9 @@ const Editor = ({ abc, setAbc }) => {
                 displayProgress: true,
                 displayClock: true
             };
-            var synthControl = new ABCJS.synth.SynthController();
-            synthControl.load("#audio", null, controlOptions);
-            synthControl.disable(true);
+            synthControl.current = new ABCJS.synth.SynthController();
+            synthControl.current.load("#audio", null, controlOptions);
+            synthControl.current.disable(true);
             var midiBuffer = new ABCJS.synth.CreateSynth();
             var visualObj = ABCJS.renderAbc("paper", abc);
             midiBuffer.init({
@@ -38,15 +48,17 @@ const Editor = ({ abc, setAbc }) => {
                 }
 
             }).then(function () {
-                synthControl.setTune(visualObj[0], true).then(function (response) {
+                synthControl.current.setTune(visualObj[0], true).then(function (response) {
                     document.querySelector(".abcjs-inline-audio").classList.remove("disabled");
-                })
+                }
+                )
             });
         } else {
             console.log("audio is not supported on this browser");
         };
     }
         , [abc]);
+
 
     const downloadMidi = () => {
         var abc = document.getElementById("abc").value;
