@@ -105,7 +105,7 @@ function App() {
             <Range min={1} max={100} step={1} defaultValue={50} label="Top K" description="" value={generationParams.top_k} onChange={value => setGenerationParams(oldGenerationParams => ({ ...oldGenerationParams, top_k: value }))} />
           </div>
         </div>
-        <button style={{height:64}} disabled={disabled} onClick={generate}>Generate</button>
+        <button style={{height:64}} disabled={disabled} onClick={generate}>Generate{!ready && " (downloads 89mb model first time)"}</button>
 
         {/* output */}
         <div style={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
