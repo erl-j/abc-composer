@@ -1,9 +1,6 @@
-# React + Vite
+# Generate irish traditional folk music in the browser.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<img width="2866" alt="image" src="https://github.com/user-attachments/assets/43ea70f5-a8a1-416a-a527-7397dc58f989" />
 
-Currently, two official plugins are available:
+Link to webpage: https://erl-j.github.io/abc-composer/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-# abc-composer
